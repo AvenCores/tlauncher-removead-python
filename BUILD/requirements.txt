@@ -1,3 +1,4 @@
 customtkinter
 pyinstaller
+requests
 tkinter

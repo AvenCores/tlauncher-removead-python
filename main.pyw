@@ -1,7 +1,14 @@
 from tkinter.messagebox import showerror, showinfo
+from requests import get
+from os import remove
 import customtkinter
 import webbrowser
 import tkinter
+
+f=open(r'tlauncher.ico', "wb")
+ufr = get("https://raw.githubusercontent.com/AvenCores/tlauncher-removead-python/master/tlauncher.ico")
+f.write(ufr.content)
+f.close()
 
 
 infotext = """Данный патч отключает рекламу в TLauncher.
@@ -35,6 +42,8 @@ def patcher():
         f.writelines("\n127.0.0.1 tlauncher.org/repo/update/lch/additional_hot_servers.json")
         f.writelines("\n127.0.0.1 tlauncher.org/repo/update/lch/servers/hot_servers-1.0.json")
         f.writelines("\n127.0.0.1 tlauncher.org/repo/update/lch/additional_hot_servers-1.0.json")
+        f.writelines("\n127.0.0.1 repo.tlauncher.org/update/downloads/configs/inner_servers.json")
+        f.writelines("\n127.0.0.1 advancedrepository.com/update/downloads/configs/inner_servers.json")
         f.writelines("\n127.0.0.1 ad.tlauncher.org")
         f.writelines("\n127.0.0.1 promo.tlauncher.org")
         f.writelines("\n127.0.0.1 stats.tlauncher.org")
@@ -77,3 +86,5 @@ class App(customtkinter.CTk):
 if __name__ == "__main__":
     app = App()
     app.mainloop()
+
+remove("tlauncher.ico")
