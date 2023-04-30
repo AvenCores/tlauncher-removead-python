@@ -6,7 +6,7 @@ import webbrowser
 import tkinter
 
 f=open(r'tlauncher.ico', "wb")
-ufr = get("https://raw.githubusercontent.com/AvenCores/tlauncher-removead-python/master/tlauncher.ico")
+ufr = get("https://raw.githubusercontent.com/AvenCores/tlauncher-removead-python/master/ICO/tlauncher.ico")
 f.write(ufr.content)
 f.close()
 
