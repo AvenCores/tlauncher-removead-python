@@ -1,9 +1,10 @@
 from tkinter.messagebox import showerror, showinfo
+from os import remove, system
 from requests import get
-from os import remove
 import customtkinter
 import webbrowser
 import tkinter
+
 
 f=open(r'tlauncher.ico', "wb")
 ufr = get("https://raw.githubusercontent.com/AvenCores/tlauncher-removead-python/master/ICO/tlauncher.ico")
@@ -13,7 +14,7 @@ f.close()
 
 infotext = """Данный патч отключает рекламу в TLauncher.
 
-После нажатия кнопки "Патч" происходит запись серверов, откуда грузится реклама в файл Hosts.
+После нажатия кнопки "Патч" происходит запись серверов, откуда грузится реклама в файл Hosts, а при нажатии кнопки "Удалить патч" файл Hosts вернется к изначальному значению.
 
 После патча желательно открыть командную строку и ввести команду "ipconfig /flushdns".
 
@@ -50,9 +51,27 @@ def patcher():
         f.writelines("\n127.0.0.1 statistics.tlauncher.org")
         f.writelines("\n127.0.0.1 analytics.tlauncher.org")
         f.writelines("\n# End Tlauncher patcher by avencores (Tkinter version)")
+
         showinfo(title="Успешно", message="Патч был успешно установлен!")
     except:
         showerror(title="Ошибка", message="Патч не был установлен!")
+
+def delpatch():
+    try:
+        f=open(r'hosts', "wb")
+        ufr = get("https://pastebin.com/raw/PN5xTMsm")
+        f.write(ufr.content)
+        f.close()
+
+        patchtodir = "C:\Windows\System32\drivers\etc\hosts"
+
+        remove(patchtodir)
+        system("copy hosts C:\Windows\System32\drivers\etc")
+
+        showinfo(title="Успешно", message="Патч был успешно удален!")
+    except:
+        showerror(title="Ошибка", message="Патч не был удален!")
+    remove("hosts")
 
 
 customtkinter.set_appearance_mode("System")
@@ -64,24 +83,28 @@ class App(customtkinter.CTk):
 
         self.geometry("400x400")
         self.title("Tlauncher RemoveAD")
-        self.iconbitmap("tlauncher.ico") # не работает при сборке
+        self.iconbitmap("tlauncher.ico")
         self.resizable(False, False)
 
-        self.frame = customtkinter.CTkTextbox(self, width=350, height=190, border_width=2)
-        self.frame.place(x=200, y=130, anchor=tkinter.CENTER)
-        self.frame.insert("0.0", infotext)
+        self.textbox  = customtkinter.CTkTextbox(self, width=350, height=200, border_width=2)
+        self.textbox.place(x=200, y=120, anchor=tkinter.CENTER)
+        self.textbox.insert("0.0", infotext)
+        self.textbox.configure(state="disabled")
 
-        self.button = customtkinter.CTkButton(self, text="Патч", width=200, command=patcher)
-        self.button.place(x=200, y=250, anchor=tkinter.CENTER)
+        self.button = customtkinter.CTkButton(self, text="Патч", width=100, command=patcher)
+        self.button.place(x=135, y=250, anchor=tkinter.CENTER)
 
-        self.button = customtkinter.CTkButton(self, text="Автор утилиты", width=200, command=openavtor)
-        self.button.place(x=200, y=290, anchor=tkinter.CENTER)
+        self.button = customtkinter.CTkButton(self, text="Удалить Патч", width=100, command=delpatch)
+        self.button.place(x=245, y=250, anchor=tkinter.CENTER)
 
-        self.button = customtkinter.CTkButton(self, text="Видео гайд (YouTube)", width=200, command=openyt)
-        self.button.place(x=200, y=330, anchor=tkinter.CENTER)
+        self.button = customtkinter.CTkButton(self, text="Автор утилиты", width=210, command=openavtor)
+        self.button.place(x=190, y=290, anchor=tkinter.CENTER)
 
-        self.button = customtkinter.CTkButton(self, text="Скачать TLaucnher (TL Legacy)", width=200, command=tllegavy)
-        self.button.place(x=200, y=370, anchor=tkinter.CENTER)
+        self.button = customtkinter.CTkButton(self, text="Видео гайд (YouTube)", width=210, command=openyt)
+        self.button.place(x=190, y=330, anchor=tkinter.CENTER)
+
+        self.button = customtkinter.CTkButton(self, text="Скачать Lagacy Launcher", width=210, command=tllegavy)
+        self.button.place(x=190, y=370, anchor=tkinter.CENTER)
 
 if __name__ == "__main__":
     app = App()
