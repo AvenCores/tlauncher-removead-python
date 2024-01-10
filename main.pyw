@@ -1,6 +1,7 @@
 from tkinter.messagebox import showerror, showinfo
 from os import remove, system
 from requests import get
+from sys import exc_info
 import customtkinter
 import webbrowser
 import tkinter
@@ -54,7 +55,7 @@ def patcher():
 
         showinfo(title="Успешно", message="Патч был успешно установлен!")
     except:
-        showerror(title="Ошибка", message="Патч не был установлен!")
+        showerror(title="Ошибка", message=f"Патч не был установлен!\nОшибка: {exc_info()}")
 
 def delpatch():
     try:
@@ -70,7 +71,7 @@ def delpatch():
 
         showinfo(title="Успешно", message="Патч был успешно удален!")
     except:
-        showerror(title="Ошибка", message="Патч не был удален!")
+        showerror(title="Ошибка", message=f"Патч не был удален!\nОшибка: {exc_info()}")
     remove("hosts")
 
 
