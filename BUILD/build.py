@@ -9,7 +9,7 @@ if platform == "win32":
     system("rd /s /q build")
     system("rd /s /q dist")
     system("del /q *.spec")
-    system(f'pyinstaller --noconfirm --onefile --windowed --uac-admin --icon "../ICO/tlauncher.ico" --add-data "C:/Users/{user}/AppData/Local/Programs/Python/Python311/Lib/site-packages/customtkinter;customtkinter/" "../main.pyw"')
+    system(f'pyinstaller --noconfirm --onefile --windowed --uac-admin --icon "../ICO/tlauncher.ico" --add-data "C:/Users/{user}/AppData/Local/Programs/Python/Python312/Lib/site-packages/customtkinter;customtkinter/" "../main.pyw"')
     system("del /q *.spec")
     system("rd /s /q build")
     system("rd /s /q %USERPROFILE%\AppData\Local\pyinstaller")
